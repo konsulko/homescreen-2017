@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016, 2017 Mentor Graphics Development (Deutschland) GmbH
+ * Copyright (c) 2017 TOYOTA MOTOR CORPORATION
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +24,6 @@
 #include <QQuickWindow>
 
 #include "layouthandler.h"
-#include "homescreencontrolinterface.h"
 #include "applicationlauncher.h"
 #include "statusbarmodel.h"
 #include "applicationmodel.h"
@@ -101,14 +101,6 @@ int main(int argc, char *argv[])
     HomescreenHandler* homescreenHandler = new HomescreenHandler();
     homescreenHandler->init(port, token.toStdString().c_str());
 
-//    HomeScreenControlInterface* hsci = new HomeScreenControlInterface();
-
-//    QObject::connect(hsci, SIGNAL(newRequestGetSurfaceStatus(int)), layoutHandler, SLOT(requestGetSurfaceStatus(int)));
-//    QObject::connect(hsci, SIGNAL(newRequestsToBeVisibleApp(int)), layoutHandler, SLOT(makeMeVisible(int)));
-//    QObject::connect(hsci, SIGNAL(newRequestRenderSurfaceToArea(int, int)), layoutHandler, SLOT(requestRenderSurfaceToArea(int,int)));
-//    QObject::connect(hsci, SIGNAL(newRequestRenderSurfaceToAreaAllowed(int, int)), layoutHandler, SLOT(requestRenderSurfaceToAreaAllowed(int,int)));
-//    QObject::connect(hsci, SIGNAL(newRequestSurfaceIdToFullScreen(int)), layoutHandler, SLOT(requestSurfaceIdToFullScreen(int)));
-
     // mail.qml loading
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("layoutHandler", layoutHandler);
@@ -119,15 +111,6 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(root);
     QObject::connect(window, SIGNAL(frameSwapped()), layoutHandler, SLOT(slotActivateSurface()));
     QObject::connect(homescreenHandler, SIGNAL(homeButton()), layoutHandler, SLOT(slotHomeButton()));
-
-//     layoutHandler->activateSurface();
-
-    // Connect C++ / QML
-//    QList<QObject *> mobjs = engine.rootObjects();
-//    MasterVolume *mv = mobjs.first()->findChild<MasterVolume *>("mv");
-//    engine.rootContext()->setContextProperty("MasterVolume", mv);
-//    QObject::connect(mv, SIGNAL(sliderVolumeChanged(int)), client, SLOT(incDecVolume(int)));
-//    QObject::connect(client, SIGNAL(volumeExternallyChanged(int)), mv, SLOT(changeExternalVolume(int)));
 
     return a.exec();
 }

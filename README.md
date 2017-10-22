@@ -2,13 +2,28 @@ This project contains:
 
 HomeScreen: AGL Home Screen reference implementation
 
-AGL repo for source code:
+**AGL repo for source code**
 
-AGL repo for bitbake recipe:
+```
+$ mkdir WORK
+$ cd WORK
+$ repo init -b dab -m dab_4.0.0_xml -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+$ repo sync
+$ git clone git clone https://gerrit.automotivelinux.org/gerrit/staging/meta-hmi-framework
+
+```
+
+Then you can get the following recipe.
+
+* `meta-hmi-framework/homescreen-2017`
 
 
+**Bitbake**
 
-Quickstart:
+```
+$ source meta-agl/scripts/aglsetup.sh -m m3ulcb agl-demo agl-devel agl-appfw-smack agl-hmi-framework
+$ bitbake homescreen-2017
+```
 
 Instructions for building HomeScreen app
 ----------------------------------------
@@ -36,7 +51,8 @@ http://docs.automotivelinux.org/docs/getting_started/en/dev/reference/source-cod
 
 Launch HomeScreen App:
 
-Usage: ./HomeScreen [port] [token]
-AGL HomeScreen - see wwww... for more details
+Usage:
 
-QT_WAYLAND_SHELL_INTEGRATION=ivi-shell LD_PRELOAD=/usr/lib/libEGL.so.1 /home/root/HomeScreen ${port} ${token}
+```
+afm-util start homescreen-2017
+```

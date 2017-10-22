@@ -1,4 +1,5 @@
 # Copyright (C) 2016, 2017 Mentor Graphics Development (Deutschland) GmbH
+# Copyright (c) 2017 TOYOTA MOTOR CORPORATION
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +33,6 @@ INSTALLS += target
 
 SOURCES += \
     src/main.cpp \
-    src/homescreencontrolinterface.cpp \
     src/layouthandler.cpp \
     src/applicationmodel.cpp \
     src/appinfo.cpp \
@@ -43,7 +43,6 @@ SOURCES += \
     src/homescreenhandler.cpp
 
 HEADERS  += \
-    src/homescreencontrolinterface.h \
     src/layouthandler.h \
     src/statusbarmodel.h \
     src/statusbarserver.h \

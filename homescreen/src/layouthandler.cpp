@@ -40,41 +40,48 @@ void LayoutHandler::init(int port, const char* token)
         exit(EXIT_FAILURE);
     }
 
-    mp_wm->requestSurface(HOMESCREEN);
+    json_object *obj = json_object_new_object();
+    json_object_object_add(obj, mp_wm->kKeyDrawingName, json_object_new_string(HOMESCREEN));
+    mp_wm->requestSurface(obj);
 
-    mp_wm->set_event_handler(LibWindowmanager::Event_Active, [this](const char* label) {
+    mp_wm->set_event_handler(LibWindowmanager::Event_Active, [this](json_object *object) {
         this->isActived = true;
         HMI_DEBUG("HomeScreen","Surface %s got activated!", HOMESCREEN);
     });
 
-    mp_wm->set_event_handler(LibWindowmanager::Event_Inactive, [this](const char* label) {
+    mp_wm->set_event_handler(LibWindowmanager::Event_Inactive, [this](json_object *object) {
         this->isActived = false;
         HMI_DEBUG("HomeScreen","Surface %s got deactivated!", HOMESCREEN);
     });
 
-	mp_wm->set_event_handler(LibWindowmanager::Event_Visible, [](char const *label) {
+	mp_wm->set_event_handler(LibWindowmanager::Event_Visible, [](json_object *object) {
 		HMI_DEBUG("HomeScreen","Surface %s  got visibled!", HOMESCREEN);
 	});
 
-	mp_wm->set_event_handler(LibWindowmanager::Event_Invisible, [](char const *label) {
+	mp_wm->set_event_handler(LibWindowmanager::Event_Invisible, [](json_object *object) {
 		HMI_DEBUG("HomeScreen","Surface %s  got invisibled!", HOMESCREEN);
 	});
 
-    mp_wm->set_event_handler(LibWindowmanager::Event_SyncDraw, [this](const char* label) {
+    mp_wm->set_event_handler(LibWindowmanager::Event_SyncDraw, [this](json_object *object) {
         HMI_DEBUG("HomeScreen","Surface %s got syncDraw!", HOMESCREEN);
         HMI_DEBUG("HomeScreen","Try to endDraw Surface %s Start!", HOMESCREEN);
-        this->mp_wm->endDraw(HOMESCREEN);
+        json_object *obj = json_object_new_object();
+        json_object_object_add(obj, mp_wm->kKeyDrawingName, json_object_new_string(HOMESCREEN));
+        this->mp_wm->endDraw(obj);
         HMI_DEBUG("HomeScreen","Try to endDraw Surface %s End!", HOMESCREEN);
     });
 
-    mp_wm->set_event_handler(LibWindowmanager::Event_FlushDraw, [](char const *label) {
+    mp_wm->set_event_handler(LibWindowmanager::Event_FlushDraw, [](json_object *object) {
         HMI_DEBUG("HomeScreen","Surface %s got flushDraw!", HOMESCREEN);
     });
 }
 
 void LayoutHandler::activateSurface()
 {
-    mp_wm->activateSurface(HOMESCREEN);
+    json_object *obj = json_object_new_object();
+    json_object_object_add(obj, mp_wm->kKeyDrawingName, json_object_new_string(HOMESCREEN));
+    json_object_object_add(obj, mp_wm->kKeyDrawingArea, json_object_new_string("normal.full"));
+    mp_wm->activateSurface(obj);
 }
 
 void LayoutHandler::slotActivateSurface()

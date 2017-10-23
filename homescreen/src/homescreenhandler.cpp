@@ -16,6 +16,7 @@
 
 #include "homescreenhandler.h"
 #include <functional>
+#include "hmi-debug.h"
 
 void* HomescreenHandler::myThis = 0;
 
@@ -60,7 +61,7 @@ void HomescreenHandler::init(int port, const char *token)
 
 void HomescreenHandler::tapShortcut(QString application_name)
 {
-    qDebug("tapShortcut %s", qPrintable(application_name));
+    HMI_DEBUG("HomeScreen","tapShortcut %s", application_name.toStdString().c_str());
     mp_hs->tapShortcut(application_name.toStdString().c_str());
 }
 
@@ -77,19 +78,19 @@ void HomescreenHandler::onEv_static(const string& event, struct json_object* eve
 void HomescreenHandler::onRep(struct json_object* reply_contents)
 {
     const char* str = json_object_to_json_string(reply_contents);
-    qDebug("HomeScreen onReply %s", str);
+    HMI_DEBUG("HomeScreen","HomeScreen onReply %s", str);
 }
 
 void HomescreenHandler::onEv(const string& event, struct json_object* event_contents)
 {
     const char* str = json_object_to_json_string(event_contents);
-    qDebug("HomeScreen onEv %s, contents: %s", event.c_str(), str);
+    HMI_DEBUG("HomeScreen","HomeScreen onEv %s, contents: %s", event.c_str(), str);
 
     if (event.compare("homescreen/on_screen_message") == 0) {
         struct json_object *json_data = json_object_object_get(event_contents, "data");
         struct json_object *json_display_message = json_object_object_get(json_data, "display_message");
         const char* display_message = json_object_get_string(json_display_message);
 
-        qDebug("display_message = %s", display_message);
+        HMI_DEBUG("HomeScreen","display_message = %s", display_message);
     }
 }

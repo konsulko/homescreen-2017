@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include <QDebug>
+#include "hmi-debug.h"
 #include "layouthandler.h"
 
 #define HOMESCREEN "HomeScreen"
@@ -44,31 +44,31 @@ void LayoutHandler::init(int port, const char* token)
 
     mp_wm->set_event_handler(LibWindowmanager::Event_Active, [this](const char* label) {
         this->isActived = true;
-        qDebug("Surface %s got activated!", label);
+        HMI_DEBUG("HomeScreen","Surface %s got activated!", HOMESCREEN);
     });
 
     mp_wm->set_event_handler(LibWindowmanager::Event_Inactive, [this](const char* label) {
         this->isActived = false;
-        qDebug("Surface %s got deactivated!", label);
+        HMI_DEBUG("HomeScreen","Surface %s got deactivated!", HOMESCREEN);
     });
 
 	mp_wm->set_event_handler(LibWindowmanager::Event_Visible, [](char const *label) {
-		qDebug("Surface %s  got visibled!", label);
+		HMI_DEBUG("HomeScreen","Surface %s  got visibled!", HOMESCREEN);
 	});
 
 	mp_wm->set_event_handler(LibWindowmanager::Event_Invisible, [](char const *label) {
-		qDebug("Surface %s  got invisibled!", label);
+		HMI_DEBUG("HomeScreen","Surface %s  got invisibled!", HOMESCREEN);
 	});
 
     mp_wm->set_event_handler(LibWindowmanager::Event_SyncDraw, [this](const char* label) {
-        qDebug("Surface %s got syncDraw!", label);
-        qDebug("Try to endDraw Surface %s Start!", label);
+        HMI_DEBUG("HomeScreen","Surface %s got syncDraw!", HOMESCREEN);
+        HMI_DEBUG("HomeScreen","Try to endDraw Surface %s Start!", HOMESCREEN);
         this->mp_wm->endDraw(HOMESCREEN);
-        qDebug("Try to endDraw Surface %s End!", label);
+        HMI_DEBUG("HomeScreen","Try to endDraw Surface %s End!", HOMESCREEN);
     });
 
     mp_wm->set_event_handler(LibWindowmanager::Event_FlushDraw, [](char const *label) {
-        qDebug("Surface %s got flushDraw!", label);
+        HMI_DEBUG("HomeScreen","Surface %s got flushDraw!", HOMESCREEN);
     });
 }
 
@@ -81,12 +81,12 @@ void LayoutHandler::slotActivateSurface()
 {
     if(isActived)
         return;
-    qDebug(__FUNCTION__);
+    HMI_DEBUG("HomeScreen","called");
     this->activateSurface();
 }
 
 void LayoutHandler::slotHomeButton()
 {
-    qDebug(__FUNCTION__);
+    HMI_DEBUG("HomeScreen","called");
     this->activateSurface();
 }

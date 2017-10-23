@@ -31,6 +31,7 @@
 #include "afm_user_daemon_proxy.h"
 #include "mastervolume.h"
 #include "homescreenhandler.h"
+#include "hmi-debug.h"
 
 // XXX: We want this DBus connection to be shared across the different
 // QML objects, is there another way to do this, a nice way, perhaps?
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
         token = positionalArguments.takeFirst();
     }
 
-    qDebug("HomeScreen port = %d, token = %s", port, token.toStdString().c_str());
+    HMI_DEBUG("HomeScreen","port = %d, token = %s", port, token.toStdString().c_str());
 
     // import C++ class to QML
     qmlRegisterType<ApplicationLauncher>("HomeScreen", 1, 0, "ApplicationLauncher");

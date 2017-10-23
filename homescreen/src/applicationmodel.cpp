@@ -19,7 +19,7 @@
 #include "applicationmodel.h"
 #include "appinfo.h"
 
-#include <QtCore/QDebug>
+#include "hmi-debug.h"
 
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
@@ -63,11 +63,11 @@ ApplicationModel::Private::Private()
         auto const icon = get_icon_name(jso);
 
         // Hide HomeScreen icon itself
-        if (name != "homescreen-2017") {
+        if (name != "homescreen-2017" && name != "OnScreenApp") {
             this->data.append(AppInfo(icon, name, id));
         }
 
-        qDebug() << "name:" << name << "icon:" << icon << "id:" << id;
+        HMI_DEBUG("HomeScreen","name: %s icon: %s id: %s.", name.toStdString().c_str(), icon.toStdString().c_str(), id.toStdString().c_str());
     }
 }
 
@@ -138,19 +138,19 @@ void ApplicationModel::move(int from, int to)
     if (to < 0 || to > rowCount()) return;
     if (from < to) {
         if (!beginMoveRows(parent, from, from, parent, to + 1)) {
-            qDebug() << from << to << false;
+            HMI_NOTICE("HomeScreen","from : %d, to : %d. false.", from, to);
             return;
         }
         d->data.move(from, to);
         endMoveRows();
     } else if (from > to) {
         if (!beginMoveRows(parent, from, from, parent, to)) {
-            qDebug() << from << to << false;
+            HMI_NOTICE("HomeScreen","from : %d, to : %d. false.", from, to);
             return;
         }
         d->data.move(from, to);
         endMoveRows();
     } else {
-        qDebug() << from << to << false;
+        HMI_NOTICE("HomeScreen","from : %d, to : %d. false.", from, to);
     }
 }

@@ -20,7 +20,7 @@
 
 #include "afm_user_daemon_proxy.h"
 
-#include <QtCore/QDebug>
+#include "hmi-debug.h"
 
 extern org::AGL::afm::user *afm_user_daemon_proxy;
 
@@ -32,10 +32,10 @@ ApplicationLauncher::ApplicationLauncher(QObject *parent)
 int ApplicationLauncher::launch(const QString &application)
 {
     int result = -1;
-    qDebug() << "ApplicationLauncher launch" << application;
+    HMI_DEBUG("HomeScreen","ApplicationLauncher launch %s.", application.toStdString().c_str());
 
     result = afm_user_daemon_proxy->start(application).value().toInt();
-    qDebug() << "ApplicationLauncher pid:" << result;
+    HMI_DEBUG("HomeScreen","ApplicationLauncher pid: %d.", result);
 
     if (result > 1) {
         setCurrent(application);

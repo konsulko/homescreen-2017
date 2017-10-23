@@ -41,17 +41,17 @@ void HomescreenHandler::init(int port, const char *token)
 
     myThis = this;
 
-//    mp_hs->registerCallback(HomescreenHandler::onEv_static, HomescreenHandler::onRep_static);
-//    mp_hs->subscribe(LibHomeScreen::event_list[0]);
-//    mp_hs->subscribe(LibHomeScreen::event_list[1]);
-
     mp_hs->registerCallback(nullptr, HomescreenHandler::onRep_static);
 
-    mp_hs->set_event_handler(LibHomeScreen::Event_OnScreenMessage, [this](const char* display_message){
-        qDebug("set_event_handler Event_OnScreenMessage display_message = %s", display_message);
+    mp_hs->set_event_handler(LibHomeScreen::Event_OnScreenMessage, [this](json_object *object){
+        const char *display_message = json_object_get_string(
+            json_object_object_get(object, "display_message"));
+        HMI_DEBUG("HomeScreen","set_event_handler Event_OnScreenMessage display_message = %s", display_message);
     });
 
-	mp_hs->set_event_handler(LibHomeScreen::Event_TapShortcut, [this](const char* application_name){
+	mp_hs->set_event_handler(LibHomeScreen::Event_TapShortcut, [this](json_object *object){
+        const char *application_name = json_object_get_string(
+            json_object_object_get(object, "application_name"));
         if(strcmp(application_name, "Home") == 0){
             emit this->homeButton();
         }

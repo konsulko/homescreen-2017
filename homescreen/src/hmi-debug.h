@@ -19,6 +19,7 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <string.h>
 #include <afb/afb-binding.h>
 
 enum LOG_LEVEL{
@@ -31,15 +32,17 @@ enum LOG_LEVEL{
     LOG_LEVEL_MAX = LOG_LEVEL_ERROR
 };
 
-#define HMI_ERROR(prefix, args,...) _HMI_LOG(LOG_LEVEL_ERROR, __FUNCTION__, __LINE__, prefix, args, ##__VA_ARGS__)
-#define HMI_WARNING(prefix, args,...) _HMI_LOG(LOG_LEVEL_WARNING, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
-#define HMI_NOTICE(prefix, args,...) _HMI_LOG(LOG_LEVEL_NOTICE, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
-#define HMI_INFO(prefix, args,...)  _HMI_LOG(LOG_LEVEL_INFO, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
-#define HMI_DEBUG(prefix, args,...) _HMI_LOG(LOG_LEVEL_DEBUG, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+
+#define HMI_ERROR(prefix, args,...) _HMI_LOG(LOG_LEVEL_ERROR, __FILENAME__, __FUNCTION__, __LINE__, prefix, args, ##__VA_ARGS__)
+#define HMI_WARNING(prefix, args,...) _HMI_LOG(LOG_LEVEL_WARNING, __FILENAME__, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
+#define HMI_NOTICE(prefix, args,...) _HMI_LOG(LOG_LEVEL_NOTICE, __FILENAME__, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
+#define HMI_INFO(prefix, args,...)  _HMI_LOG(LOG_LEVEL_INFO, __FILENAME__, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
+#define HMI_DEBUG(prefix, args,...) _HMI_LOG(LOG_LEVEL_DEBUG, __FILENAME__, __FUNCTION__,__LINE__, prefix, args,##__VA_ARGS__)
 
 static char ERROR_FLAG[6][20] = {"NONE", "ERROR", "WARNING", "NOTICE", "INFO", "DEBUG"};
 
-static void _HMI_LOG(enum LOG_LEVEL level, const char* func, const int line, const char* prefix, const char* log, ...)
+static void _HMI_LOG(enum LOG_LEVEL level, const char* file, const char* func, const int line, const char* prefix, const char* log, ...)
 {
     const int log_level = (getenv("USE_HMI_DEBUG") == NULL)?0:atoi(getenv("USE_HMI_DEBUG"));
     if(log_level < level)
@@ -58,7 +61,7 @@ static void _HMI_LOG(enum LOG_LEVEL level, const char* func, const int line, con
 	va_start(args, log);
 	if (log == NULL || vasprintf(&message, log, args) < 0)
         message = NULL;
-    fprintf(stderr,  "[%10.3f] [%s %s] [%s:%d] >>> %s \n", time / 1000.0, prefix, ERROR_FLAG[level], func, line, message);
+    fprintf(stderr,  "[%10.3f] [%s %s] [%s, %s(), Line:%d] >>> %s \n", time / 1000.0, prefix, ERROR_FLAG[level], file, func, line, message);
     va_end(args);
 	free(message);
 }

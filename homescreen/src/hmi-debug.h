@@ -19,8 +19,9 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
-#include <afb/afb-binding.h>
+#include <stdlib.h>
 
 enum LOG_LEVEL{
     LOG_LEVEL_NONE = 0,
@@ -44,7 +45,7 @@ static char ERROR_FLAG[6][20] = {"NONE", "ERROR", "WARNING", "NOTICE", "INFO", "
 
 static void _HMI_LOG(enum LOG_LEVEL level, const char* file, const char* func, const int line, const char* prefix, const char* log, ...)
 {
-    const int log_level = (getenv("USE_HMI_DEBUG") == NULL)?0:atoi(getenv("USE_HMI_DEBUG"));
+    const int log_level = (getenv("USE_HMI_DEBUG") == NULL)?LOG_LEVEL_ERROR:atoi(getenv("USE_HMI_DEBUG"));
     if(log_level < level)
     {
         return;

@@ -30,7 +30,7 @@ enum LOG_LEVEL{
     LOG_LEVEL_NOTICE,
     LOG_LEVEL_INFO,
     LOG_LEVEL_DEBUG,
-    LOG_LEVEL_MAX = LOG_LEVEL_ERROR
+    LOG_LEVEL_MAX = LOG_LEVEL_DEBUG
 };
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)

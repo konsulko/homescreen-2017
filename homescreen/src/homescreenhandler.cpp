@@ -49,14 +49,6 @@ void HomescreenHandler::init(int port, const char *token)
         HMI_DEBUG("HomeScreen","set_event_handler Event_OnScreenMessage display_message = %s", display_message);
     });
 
-	mp_hs->set_event_handler(LibHomeScreen::Event_TapShortcut, [this](json_object *object){
-        const char *application_name = json_object_get_string(
-            json_object_object_get(object, "application_name"));
-        if(strcmp(application_name, "Home") == 0){
-            emit this->homeButton();
-        }
-	});
-
 }
 
 void HomescreenHandler::tapShortcut(QString application_name)

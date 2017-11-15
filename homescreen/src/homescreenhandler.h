@@ -40,9 +40,6 @@ public:
     static void* myThis;
     static void onRep_static(struct json_object* reply_contents);
     static void onEv_static(const string& event, struct json_object* event_contents);
-signals:
-    void homeButton();
-
 private:
     LibHomeScreen *mp_hs;
 };

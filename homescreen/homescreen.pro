@@ -19,12 +19,13 @@ QT = qml quick dbus
 CONFIG += c++11 link_pkgconfig
 DESTDIR = $${OUT_PWD}/../package/root/bin
 #PKGCONFIG += libpulse
+PKGCONFIG += qlibwindowmanager
 
 LIBS += -lsystemd
 LIBS += -lafbwsc
 LIBS += -ljson-c
 LIBS += -lhomescreen
-LIBS += -lwindowmanager
+#LIBS += -lwindowmanager
 
 include(../interfaces/interfaces.pri)
 
@@ -33,7 +34,6 @@ INSTALLS += target
 
 SOURCES += \
     src/main.cpp \
-    src/layouthandler.cpp \
     src/applicationmodel.cpp \
     src/appinfo.cpp \
     src/statusbarmodel.cpp \
@@ -43,7 +43,6 @@ SOURCES += \
     src/homescreenhandler.cpp
 
 HEADERS  += \
-    src/layouthandler.h \
     src/statusbarmodel.h \
     src/statusbarserver.h \
     src/applicationlauncher.h \

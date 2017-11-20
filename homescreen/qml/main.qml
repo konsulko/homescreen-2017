@@ -37,7 +37,7 @@ Window {
         width: 1080
         height: 1920
         scale: 1.0
-        source: './images/AGL_HMI_Background_NoCar-01.png'
+        source: './images/AGL_HMI_Blue_Background_NoCar-01.png'
 
         ColumnLayout {
             anchors.fill: parent
@@ -63,6 +63,7 @@ Window {
                 Layout.fillHeight: true
                 Layout.preferredHeight: 1920 - 218 - 215
                 visible: true
+                z: -1
             }
 
             MediaArea {

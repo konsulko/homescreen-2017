@@ -26,11 +26,11 @@ MouseArea {
     Image {
         id: icon
         anchors.fill: parent
-        source: './images/Shortcut/HMI_Shortcut_%1-01.png'.arg(root.name)
+        source: './images/Shortcut/HMI_Shortcut_%1-01.svg'.arg(root.name)
     }
     Image {
         anchors.fill: parent
-        source: './images/Shortcut/HMI_Shortcut_%1_Active-01.png'.arg(root.name)
+        source: './images/Shortcut/HMI_Shortcut_%1_Active-01.svg'.arg(root.name)
         opacity: 1.0 - icon.opacity
     }
     states: [

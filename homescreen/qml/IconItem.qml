@@ -30,7 +30,7 @@ Item {
             text: model.icon == 'Blank' ? model.name.toUpperCase() : ''
         }
 
-        source: './images/HMI_AppLauncher_%1_%2-01.png'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'Active' : 'Inactive')
+        source: './images/HMI_AppLauncher_%1_%2-01.svg'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'Active' : 'Inactive')
         antialiasing: item.state !== ''
         Behavior on x { enabled: item.state !== 'active'; NumberAnimation { duration: 400; easing.type: Easing.OutCubic } }
         Behavior on y { enabled: item.state !== 'active'; NumberAnimation { duration: 400; easing.type: Easing.OutCubic } }

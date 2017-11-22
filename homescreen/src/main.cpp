@@ -23,7 +23,7 @@
 #include <QtQml/qqml.h>
 #include <QQuickWindow>
 
-#include "layouthandler.h"
+#include <qlibwindowmanager.h>
 #include "applicationlauncher.h"
 #include "statusbarmodel.h"
 #include "applicationmodel.h"
@@ -96,8 +96,18 @@ int main(int argc, char *argv[])
     qDBusRegisterMetaType<AppInfo>();
     qDBusRegisterMetaType<QList<AppInfo> >();
 
-    LayoutHandler* layoutHandler = new LayoutHandler();
-    layoutHandler->init(port, token.toStdString().c_str());
+    QLibWindowmanager* layoutHandler = new QLibWindowmanager();
+    if(layoutHandler->init(port,token) != 0){
+        exit(EXIT_FAILURE);
+    }
+
+    if (layoutHandler->requestSurface(QString("HomeScreen")) != 0) {
+        exit(EXIT_FAILURE);
+    }
+
+    layoutHandler->set_event_handler(QLibWindowmanager::Event_SyncDraw, [layoutHandler](json_object *object) {
+        layoutHandler->endDraw(QString("HomeScreen"));
+    });
 
     HomescreenHandler* homescreenHandler = new HomescreenHandler();
     homescreenHandler->init(port, token.toStdString().c_str());
@@ -111,7 +121,6 @@ int main(int argc, char *argv[])
     QObject *root = engine.rootObjects().first();
     QQuickWindow *window = qobject_cast<QQuickWindow *>(root);
     QObject::connect(window, SIGNAL(frameSwapped()), layoutHandler, SLOT(slotActivateSurface()));
-    QObject::connect(homescreenHandler, SIGNAL(homeButton()), layoutHandler, SLOT(slotHomeButton()));
 
     return a.exec();
 }

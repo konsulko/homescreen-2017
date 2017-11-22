@@ -79,6 +79,10 @@ Item {
                         }
                     }
                     homescreenHandler.tapShortcut(model.name)
+                    if(model.name == 'Home')
+                    {
+                        layoutHandler.activateSurface('HomeScreen');
+                    }
                 }
             }
         }

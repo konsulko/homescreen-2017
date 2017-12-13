@@ -36,10 +36,10 @@ Item {
             application: 'mediaplayer@0.1'
         }
         ListElement {
-//            name: 'HVAC'
-//            application: 'hvac@0.1'
-            name: 'Radio'
-            application: 'radio@0.1'
+            name: 'HVAC'
+            application: 'hvac@0.1'
+//            name: 'Radio'
+//            application: 'radio@0.1'
         }
         ListElement {
             name: 'Navigation'

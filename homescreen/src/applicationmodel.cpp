@@ -48,6 +48,12 @@ namespace {
         } else {
             icon[0] = icon[0].toUpper();
         }
+
+        if ( !QFile::exists(QString(":/images/HMI_AppLauncher_%1_Active-01.png").arg(icon)) ||
+             !QFile::exists(QString(":/images/HMI_AppLauncher_%1_Inactive-01.png").arg(icon)) )
+        {
+            icon = "Blank";
+        }
         return icon;
     }
 }

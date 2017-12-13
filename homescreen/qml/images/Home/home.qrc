@@ -21,5 +21,7 @@
         <file>HMI_AppLauncher_Radio_Inactive-01.png</file>
         <file>HMI_AppLauncher_Settings_Active-01.png</file>
         <file>HMI_AppLauncher_Settings_Inactive-01.png</file>
+        <file>HMI_AppLauncher_Blank_Active-01.png</file>
+        <file>HMI_AppLauncher_Blank_Inactive-01.png</file>
     </qresource>
 </RCC>

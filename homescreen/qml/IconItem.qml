@@ -13,7 +13,7 @@ Item {
             y: 60
             font.pixelSize: 125
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "#5CFE96"
+            color: "#00ADDC"
             text: model.icon == 'Blank' ? model.name.substring(0,1).toUpperCase() : ''
         }
 
@@ -27,7 +27,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             color: "white"
-            text: model.icon == 'Blank' ? model.name.toUpperCase() : ''
+            text: qsTr(model.name.toUpperCase())
         }
 
         source: './images/HMI_AppLauncher_%1_%2-01.svg'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'Active' : 'Inactive')

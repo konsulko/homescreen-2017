@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: main
@@ -13,9 +14,19 @@ Item {
             y: 60
             font.pixelSize: 125
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "#00ADDC"
-            text: model.icon == 'Blank' ? model.name.substring(0,1).toUpperCase() : ''
+            text: model.name.substring(0,1).toUpperCase()
+            visible: false
         }
+        LinearGradient  {
+            anchors.fill: title
+            source: title
+            gradient: Gradient {
+                GradientStop { position: -0.5; color: "#6BFBFF" }
+                GradientStop { position: +1.5; color: "#00ADDC" }
+            }
+            visible: model.icon === 'Blank'
+        }
+
 
         Label {
             id: name

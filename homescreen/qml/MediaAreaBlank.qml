@@ -110,20 +110,6 @@ Image {
                     if (pressed) {volume_timer.stop()}
                     else {volume_timer.restart()}
                 }
-                background: Rectangle {
-                    id: slider_bg
-                    height: 16
-                    color: "#59FF7F"
-                }
-                handle: Rectangle {
-                    anchors.verticalCenter: slider_bg.verticalCenter
-                    width: 48
-                    height: 48
-                    radius: 24
-                    x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-                    y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                    color: "white"
-                }
             }
             Label {
                 font.pixelSize: 36

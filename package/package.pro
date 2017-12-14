@@ -16,3 +16,7 @@ wgt.target = package
 wgt.commands = wgtpkg-pack -f -o homescreen-2017.wgt root
 
 QMAKE_EXTRA_TARGETS += wgt
+
+deploy.files = homescreen-2017.wgt
+deploy.path = /usr/AGL/apps/autoinstall
+INSTALLS += deploy

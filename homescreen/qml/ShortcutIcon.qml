@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 2.0
 
 MouseArea {
     id: root
@@ -32,6 +33,18 @@ MouseArea {
         anchors.fill: parent
         source: './images/Shortcut/HMI_Shortcut_%1_Active-01.svg'.arg(root.name)
         opacity: 1.0 - icon.opacity
+    }
+    Label {
+        id: name
+        y: 160
+        width: root.width - 10
+        font.pixelSize: 15
+        font.letterSpacing: 5
+        // wrapMode: Text.WordWrap
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
+        color: "white"
+        text: qsTr(model.name.toUpperCase())
     }
     states: [
         State {

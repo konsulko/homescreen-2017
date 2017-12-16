@@ -29,9 +29,6 @@ LIBS += -lhomescreen
 
 include(../interfaces/interfaces.pri)
 
-target.path = /home/root
-INSTALLS += target
-
 SOURCES += \
     src/main.cpp \
     src/applicationmodel.cpp \

@@ -18,14 +18,9 @@ TARGET = HomeScreen
 QT = qml quick dbus
 CONFIG += c++11 link_pkgconfig
 DESTDIR = $${OUT_PWD}/../package/root/bin
-#PKGCONFIG += libpulse
 PKGCONFIG += qlibwindowmanager
 
-LIBS += -lsystemd
-LIBS += -lafbwsc
-LIBS += -ljson-c
 LIBS += -lhomescreen
-#LIBS += -lwindowmanager
 
 include(../interfaces/interfaces.pri)
 

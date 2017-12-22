@@ -39,20 +39,12 @@ public:
 namespace {
     QString get_icon_name(QJsonObject const &i)
     {
-        QString icon = i["id"].toString().split("@").front();
-        if (icon == "hvac" || icon == "poi") {
-            icon = icon.toUpper();
-        } else if (icon == "mediaplayer") {
-//            icon = "Multimedia";
-            icon = "MediaPlayer";
-        } else {
-            icon[0] = icon[0].toUpper();
-        }
+        QString icon = i["name"].toString().toLower();
 
-        if ( !QFile::exists(QString(":/images/HMI_AppLauncher_%1_Active-01.svg").arg(icon)) ||
-             !QFile::exists(QString(":/images/HMI_AppLauncher_%1_Inactive-01.svg").arg(icon)) )
+        if ( !QFile::exists(QString(":/images/%1_active.svg").arg(icon)) ||
+             !QFile::exists(QString(":/images/%1_inactive.svg").arg(icon)) )
         {
-            icon = "Blank";
+            icon = "blank";
         }
         return icon;
     }

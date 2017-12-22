@@ -27,11 +27,11 @@ MouseArea {
     Image {
         id: icon
         anchors.fill: parent
-        source: './images/Shortcut/HMI_Shortcut_%1-01.svg'.arg(root.name)
+        source: './images/Shortcut/%1.svg'.arg(root.name.toLowerCase())
     }
     Image {
         anchors.fill: parent
-        source: './images/Shortcut/HMI_Shortcut_%1_Active-01.svg'.arg(root.name)
+        source: './images/Shortcut/%1_active.svg'.arg(root.name.toLowerCase())
         opacity: 1.0 - icon.opacity
     }
     Label {

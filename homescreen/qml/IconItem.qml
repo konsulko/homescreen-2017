@@ -4,45 +4,60 @@ import QtGraphicalEffects 1.0
 
 Item {
     id: main
-    Image {
-        id: item; parent: loc
-        x: main.x + 5; y: main.y + 5
-        width: main.width - 10; height: main.height - 10;
+    width: 320
+    height: 320
 
-        Label {
-            id: title
-            y: 60
-            font.pixelSize: 125
+    Item {
+        id: container
+        parent: loc
+        x: main.x
+        y: main.y
+        width: main.width
+        height: main.height
+
+        Image {
+            id: item
+            anchors.top: parent.top
+            anchors.topMargin: 20
             anchors.horizontalCenter: parent.horizontalCenter
-            text: model.name.substring(0,1).toUpperCase()
-            visible: false
-        }
-        LinearGradient  {
-            anchors.fill: title
-            source: title
-            gradient: Gradient {
-                GradientStop { position: -0.5; color: "#6BFBFF" }
-                GradientStop { position: +1.5; color: "#00ADDC" }
+            width: 220
+            height: width
+            source: './images/%1_%2.svg'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'active' : 'inactive')
+            antialiasing: item.state !== ''
+
+            Label {
+                id: title
+                style: Text.Outline
+                styleColor: 'red'
+                color: 'transparent'
+                font.pixelSize: 125
+                anchors.centerIn: parent
+                text: model.name.substring(0,1).toUpperCase()
+                visible: model.icon === 'blank'
+
+                layer.enabled: true
+                layer.effect: LinearGradient {
+                    gradient: Gradient {
+                            GradientStop { position: -0.5; color: "#6BFBFF" }
+                            GradientStop { position: +1.5; color: "#00ADDC" }
+                    }
+                }
             }
-            visible: model.icon === 'Blank'
         }
-
-
         Label {
             id: name
-            y: 245
-            width: main.width - 10
+            anchors.top: item.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 20
             font.pixelSize: 25
             font.letterSpacing: 5
             wrapMode: Text.WordWrap
-            anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             color: "white"
             text: qsTr(model.name.toUpperCase())
         }
 
-        source: './images/HMI_AppLauncher_%1_%2-01.svg'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'Active' : 'Inactive')
-        antialiasing: item.state !== ''
         Behavior on x { enabled: item.state !== 'active'; NumberAnimation { duration: 400; easing.type: Easing.OutCubic } }
         Behavior on y { enabled: item.state !== 'active'; NumberAnimation { duration: 400; easing.type: Easing.OutCubic } }
         SequentialAnimation on rotation {
@@ -56,12 +71,18 @@ Item {
             State {
                 name: 'active'
                 when: loc.currentId == model.id
-                PropertyChanges { target: item; x: loc.mouseX - width/2; y: loc.mouseY - height/2; scale: 1.15; z: 10 }
+                PropertyChanges {
+                    target: container
+                    x: loc.mouseX - width/2
+                    y: loc.mouseY - height/2
+                    scale: 1.15
+                    z: 10
+                }
             },
             State {
                 when: loc.currentId !== ''
                 PropertyChanges {
-                    target: item
+                    target: container
                     scale: 0.85
                     opacity: 0.75
                 }

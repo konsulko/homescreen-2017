@@ -1,14 +1,12 @@
 <RCC>
     <qresource prefix="/images/Shortcut">
-        <file>HMI_Shortcut_Home_Active-01.svg</file>
-        <file>HMI_Shortcut_Home-01.svg</file>
-        <file>HMI_Shortcut_HVAC_Active-01.svg</file>
-        <file>HMI_Shortcut_HVAC-01.svg</file>
-        <file>HMI_Shortcut_MediaPlayer_Active-01.svg</file>
-        <file>HMI_Shortcut_MediaPlayer-01.svg</file>
-        <file>HMI_Shortcut_Navigation_Active-01.svg</file>
-        <file>HMI_Shortcut_Navigation-01.svg</file>
-        <file>HMI_Shortcut_Radio_Active-01.svg</file>
-        <file>HMI_Shortcut_Radio-01.svg</file>
+        <file>home.svg</file>
+        <file>home_active.svg</file>
+        <file>hvac.svg</file>
+        <file>hvac_active.svg</file>
+        <file>music.svg</file>
+        <file>music_active.svg</file>
+        <file>navigation.svg</file>
+        <file>navigation_active.svg</file>
     </qresource>
 </RCC>

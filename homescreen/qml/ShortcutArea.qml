@@ -32,14 +32,12 @@ Item {
             application: ''
         }
         ListElement {
-            name: 'MediaPlayer'
+            name: 'Music'
             application: 'mediaplayer@0.1'
         }
         ListElement {
             name: 'HVAC'
             application: 'hvac@0.1'
-//            name: 'Radio'
-//            application: 'radio@0.1'
         }
         ListElement {
             name: 'Navigation'
@@ -75,6 +73,7 @@ Item {
 //                            layoutHandler.showAppLayer(model.application, pid)
                         }
                         else {
+                            console.warn(model.application)
                             console.warn("app cannot be launched!")
                         }
                     }

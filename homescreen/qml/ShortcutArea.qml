@@ -56,21 +56,18 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 name: model.name
-                active: model.application === launcher.current
+                active: model.name === launcher.current
                 onClicked: {
                     if (0 === model.index) {
                         appLauncherAreaLauncher.visible = true
                         applicationArea.visible = false
-//                        layoutHandler.hideAppLayer()
-                        launcher.current = ''
+                        launcher.current = 'Home'
                     }
                     else {
                         pid = launcher.launch(model.application)
                         if (1 < pid) {
                             applicationArea.visible = true
                             appLauncherAreaLauncher.visible = false
-//                            layoutHandler.makeMeVisible(pid)
-//                            layoutHandler.showAppLayer(model.application, pid)
                         }
                         else {
                             console.warn(model.application)

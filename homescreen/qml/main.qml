@@ -27,10 +27,6 @@ Window {
     height: container.height * container.scale
     title: 'HomeScreen'
 
-    ApplicationLauncher {
-        id: launcher
-    }
-
     Image {
         id: container
         anchors.centerIn: parent

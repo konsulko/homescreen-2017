@@ -26,7 +26,23 @@ extern org::AGL::afm::user *afm_user_daemon_proxy;
 
 ApplicationLauncher::ApplicationLauncher(QObject *parent)
     : QObject(parent)
+    , m_launching(false)
+    , m_timeout(new QTimer(this))
 {
+    m_timeout->setInterval(3000);
+    m_timeout->setSingleShot(true);
+    connect(m_timeout, &QTimer::timeout, [&]() {
+        setLaunching(false);
+    });
+    connect(this, &ApplicationLauncher::launchingChanged, [&](bool launching) {
+        if (launching)
+            m_timeout->start();
+        else
+            m_timeout->stop();
+    });
+    connect(this, &ApplicationLauncher::currentChanged, [&]() {
+        setLaunching(false);
+    });
 }
 
 int ApplicationLauncher::launch(const QString &application)
@@ -38,10 +54,22 @@ int ApplicationLauncher::launch(const QString &application)
     HMI_DEBUG("HomeScreen","ApplicationLauncher pid: %d.", result);
 
     if (result > 1) {
-        setCurrent(application);
+        setLaunching(true);
     }
 
     return result;
+}
+
+bool ApplicationLauncher::isLaunching() const
+{
+    return m_launching;
+}
+
+void ApplicationLauncher::setLaunching(bool launching)
+{
+    if (m_launching == launching) return;
+    m_launching = launching;
+    launchingChanged(launching);
 }
 
 QString ApplicationLauncher::current() const

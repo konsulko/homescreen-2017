@@ -21,17 +21,22 @@
 
 #include <QtCore/QObject>
 
+class QTimer;
+
 class ApplicationLauncher : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool launching READ isLaunching NOTIFY launchingChanged)
     Q_PROPERTY(QString current READ current WRITE setCurrent NOTIFY currentChanged)
 public:
     explicit ApplicationLauncher(QObject *parent = NULL);
 
+    bool isLaunching() const;
     QString current() const;
 
 signals:
     void newAppRequestsToBeVisible(int pid);
+    void launchingChanged(bool launching);
     void currentChanged(const QString &current);
 
 public slots:
@@ -39,7 +44,12 @@ public slots:
     void setCurrent(const QString &current);
 
 private:
+    void setLaunching(bool launching);
+
+private:
+    bool m_launching;
     QString m_current;
+    QTimer *m_timeout;
 };
 
 #endif // APPLICATIONLAUNCHER_H

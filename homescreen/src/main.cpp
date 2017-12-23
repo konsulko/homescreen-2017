@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     HMI_DEBUG("HomeScreen","port = %d, token = %s", port, token.toStdString().c_str());
 
     // import C++ class to QML
-    qmlRegisterType<ApplicationLauncher>("HomeScreen", 1, 0, "ApplicationLauncher");
+    // qmlRegisterType<ApplicationLauncher>("HomeScreen", 1, 0, "ApplicationLauncher");
     qmlRegisterType<ApplicationModel>("Home", 1, 0, "ApplicationModel");
     qmlRegisterType<StatusBarModel>("HomeScreen", 1, 0, "StatusBarModel");
     qmlRegisterType<MasterVolume>("MasterVolume", 1, 0, "MasterVolume");
@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
     qDBusRegisterMetaType<AppInfo>();
     qDBusRegisterMetaType<QList<AppInfo> >();
 
+    ApplicationLauncher *launcher = new ApplicationLauncher();
     QLibWindowmanager* layoutHandler = new QLibWindowmanager();
     if(layoutHandler->init(port,token) != 0){
         exit(EXIT_FAILURE);
@@ -109,6 +110,17 @@ int main(int argc, char *argv[])
         layoutHandler->endDraw(QString("HomeScreen"));
     });
 
+    layoutHandler->set_event_handler(QLibWindowmanager::Event_Visible, [layoutHandler, launcher](json_object *object) {
+        QString label = QString(json_object_get_string(	json_object_object_get(object, "drawing_name") ));
+        qDebug() << label;
+        QMetaObject::invokeMethod(launcher, "setCurrent", Qt::QueuedConnection, Q_ARG(QString, label == "HomeScreen" ? "Home" : label));
+    });
+
+    layoutHandler->set_event_handler(QLibWindowmanager::Event_Invisible, [layoutHandler, launcher](json_object *object) {
+        const char* label = json_object_get_string(	json_object_object_get(object, "drawing_name") );
+        HMI_DEBUG("HomeScreen", "surface %s Event_Invisible", label);
+    });
+
     HomescreenHandler* homescreenHandler = new HomescreenHandler();
     homescreenHandler->init(port, token.toStdString().c_str());
 
@@ -116,6 +128,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("layoutHandler", layoutHandler);
     engine.rootContext()->setContextProperty("homescreenHandler", homescreenHandler);
+    engine.rootContext()->setContextProperty("launcher", launcher);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QObject *root = engine.rootObjects().first();

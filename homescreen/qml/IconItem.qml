@@ -6,6 +6,7 @@ Item {
     id: main
     width: 320
     height: 320
+    property string icon: model.icon
 
     Item {
         id: container
@@ -25,21 +26,31 @@ Item {
             source: './images/%1_%2.svg'.arg(model.icon).arg(loc.pressed && (loc.index === model.index || loc.currentId === model.id) ? 'active' : 'inactive')
             antialiasing: item.state !== ''
 
-            Label {
-                id: title
-                style: Text.Outline
-                styleColor: 'red'
-                color: 'transparent'
-                font.pixelSize: 125
-                anchors.centerIn: parent
-                text: model.name.substring(0,1).toUpperCase()
-                visible: model.icon === 'blank'
+            property string initial: model.name.substring(0,1).toUpperCase()
 
+            Item {
+                id: title
+                width: 125
+                height: 125
+                anchors.centerIn: parent
+                Repeater {
+                    delegate: Label {
+                        style: Text.Outline
+                        styleColor: 'red'
+                        color: 'transparent'
+                        font.pixelSize: 125
+                        anchors.centerIn: parent
+                        anchors.horizontalCenterOffset: model.index / 3 - 1
+                        anchors.verticalCenterOffset: model.index % 3 - 1
+                        text: item.initial
+                    }
+                    model: main.icon === 'blank' ? 9 : 0
+                }
                 layer.enabled: true
                 layer.effect: LinearGradient {
                     gradient: Gradient {
-                            GradientStop { position: -0.5; color: "#6BFBFF" }
-                            GradientStop { position: +1.5; color: "#00ADDC" }
+                        GradientStop { position: -0.5; color: "#6BFBFF" }
+                        GradientStop { position: +1.5; color: "#00ADDC" }
                     }
                 }
             }

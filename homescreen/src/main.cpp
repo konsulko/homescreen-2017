@@ -24,6 +24,7 @@
 #include <QQuickWindow>
 
 #include <qlibwindowmanager.h>
+#include <weather.h>
 #include "applicationlauncher.h"
 #include "statusbarmodel.h"
 #include "applicationmodel.h"
@@ -124,11 +125,22 @@ int main(int argc, char *argv[])
     HomescreenHandler* homescreenHandler = new HomescreenHandler();
     homescreenHandler->init(port, token.toStdString().c_str());
 
+    QUrl bindingAddress;
+    bindingAddress.setScheme(QStringLiteral("ws"));
+    bindingAddress.setHost(QStringLiteral("localhost"));
+    bindingAddress.setPort(port);
+    bindingAddress.setPath(QStringLiteral("/api"));
+
+    QUrlQuery query;
+    query.addQueryItem(QStringLiteral("token"), token);
+    bindingAddress.setQuery(query);
+
     // mail.qml loading
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("layoutHandler", layoutHandler);
     engine.rootContext()->setContextProperty("homescreenHandler", homescreenHandler);
     engine.rootContext()->setContextProperty("launcher", launcher);
+    engine.rootContext()->setContextProperty("weather", new Weather(bindingAddress));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QObject *root = engine.rootObjects().first();

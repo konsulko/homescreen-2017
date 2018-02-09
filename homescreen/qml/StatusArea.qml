@@ -30,6 +30,31 @@ Item {
         onTriggered: root.now = new Date
     }
 
+    Connections {
+        target: weather
+
+        onConditionChanged: {
+            var current_condition = weather.condition
+            var icon = ''
+
+            if (current_condition.indexOf("clouds") != -1) {
+                icon = "WeatherIcons_Cloudy-01.png"
+            } else if (current_condition.indexOf("thunderstorm") != -1) {
+                icon = "WeatherIcons_Thunderstorm-01.png"
+            } else if (current_condition.indexOf("snow") != -1) {
+                icon = "WeatherIcons_Snow-01.png"
+            } else if (current_condition.indexOf("rain") != -1) {
+                icon = "WeatherIcons_Rain-01.png"
+            }
+
+            condition.source = icon ? './images/Weather/' + icon : ''
+        }
+
+        onTemperatureChanged: {
+            temperature.text = weather.temperature.split(".")[0] + '°F'
+        }
+    }
+
     RowLayout {
         anchors.fill: parent
         spacing: 0
@@ -73,9 +98,11 @@ Item {
                     Layout.fillHeight: true
                     Layout.preferredHeight: 20
                     Image {
+                        id: condition
                         source: './images/Weather/WeatherIcons_Rain-01.png'
                     }
                     Text {
+                        id: temperature
                         text: '64°F'
                         color: 'white'
                         font.family: 'Helvetica'

@@ -32,7 +32,7 @@ Item {
             application: ''
         }
         ListElement {
-            name: 'Music'
+            name: 'MediaPlayer'
             application: 'mediaplayer@0.1'
         }
         ListElement {

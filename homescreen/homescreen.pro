@@ -26,8 +26,6 @@ include(../interfaces/interfaces.pri)
 
 SOURCES += \
     src/main.cpp \
-    src/applicationmodel.cpp \
-    src/appinfo.cpp \
     src/statusbarmodel.cpp \
     src/statusbarserver.cpp \
     src/applicationlauncher.cpp \
@@ -38,8 +36,6 @@ HEADERS  += \
     src/statusbarmodel.h \
     src/statusbarserver.h \
     src/applicationlauncher.h \
-    src/applicationmodel.h \
-    src/appinfo.h \
     src/mastervolume.h \
     src/homescreenhandler.h
 
@@ -47,7 +43,6 @@ OTHER_FILES += \
     README.md
 
 RESOURCES += \
-    qml/images/Home/home.qrc \
     qml/images/MediaPlayer/mediaplayer.qrc \
     qml/images/MediaMusic/mediamusic.qrc \
     qml/images/Weather/weather.qrc \

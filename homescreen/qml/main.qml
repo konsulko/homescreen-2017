@@ -50,16 +50,7 @@ Window {
                 Layout.fillHeight: true
                 Layout.preferredHeight: 1920 - 218 - 215
 
-                visible: false
-            }
-
-            Home {
-                id: appLauncherAreaLauncher
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.preferredHeight: 1920 - 218 - 215
                 visible: true
-                z: -1
             }
 
             MediaArea {

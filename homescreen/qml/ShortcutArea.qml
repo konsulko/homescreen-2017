@@ -28,8 +28,8 @@ Item {
     ListModel {
         id: applicationModel
         ListElement {
-            name: 'Home'
-            application: ''
+            name: 'launcher'
+            application: 'launcher@0.1'
         }
         ListElement {
             name: 'MediaPlayer'
@@ -58,27 +58,15 @@ Item {
                 name: model.name
                 active: model.name === launcher.current
                 onClicked: {
-                    if (0 === model.index) {
-                        appLauncherAreaLauncher.visible = true
-                        applicationArea.visible = false
-                        launcher.current = 'Home'
+                    pid = launcher.launch(model.application)
+                    if (1 < pid) {
+                        applicationArea.visible = true
                     }
                     else {
-                        pid = launcher.launch(model.application)
-                        if (1 < pid) {
-                            applicationArea.visible = true
-                            appLauncherAreaLauncher.visible = false
-                        }
-                        else {
-                            console.warn(model.application)
-                            console.warn("app cannot be launched!")
-                        }
+                        console.warn(model.application)
+                        console.warn("app cannot be launched!")
                     }
                     homescreenHandler.tapShortcut(model.name)
-                    if(model.name == 'Home')
-                    {
-                        layoutHandler.activateSurface('HomeScreen');
-                    }
                 }
             }
         }

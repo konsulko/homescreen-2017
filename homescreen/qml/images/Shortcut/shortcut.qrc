@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/images/Shortcut">
-        <file>home.svg</file>
-        <file>home_active.svg</file>
+        <file>launcher.svg</file>
+        <file>launcher_active.svg</file>
         <file>hvac.svg</file>
         <file>hvac_active.svg</file>
         <file>mediaplayer.svg</file>

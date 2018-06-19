@@ -27,8 +27,6 @@
 #include <weather.h>
 #include "applicationlauncher.h"
 #include "statusbarmodel.h"
-#include "applicationmodel.h"
-#include "appinfo.h"
 #include "afm_user_daemon_proxy.h"
 #include "mastervolume.h"
 #include "homescreenhandler.h"
@@ -89,13 +87,8 @@ int main(int argc, char *argv[])
 
     // import C++ class to QML
     // qmlRegisterType<ApplicationLauncher>("HomeScreen", 1, 0, "ApplicationLauncher");
-    qmlRegisterType<ApplicationModel>("Home", 1, 0, "ApplicationModel");
     qmlRegisterType<StatusBarModel>("HomeScreen", 1, 0, "StatusBarModel");
     qmlRegisterType<MasterVolume>("MasterVolume", 1, 0, "MasterVolume");
-
-    // DBus
-    qDBusRegisterMetaType<AppInfo>();
-    qDBusRegisterMetaType<QList<AppInfo> >();
 
     ApplicationLauncher *launcher = new ApplicationLauncher();
     QLibWindowmanager* layoutHandler = new QLibWindowmanager();

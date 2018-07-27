@@ -140,5 +140,9 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(root);
     QObject::connect(window, SIGNAL(frameSwapped()), layoutHandler, SLOT(slotActivateSurface()));
 
+    QList<QObject *> sobjs = engine.rootObjects();
+    StatusBarModel *statusBar = sobjs.first()->findChild<StatusBarModel *>("statusBar");
+    statusBar->init(bindingAddress, engine.rootContext());
+
     return a.exec();
 }

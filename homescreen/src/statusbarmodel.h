@@ -18,6 +18,7 @@
 #define STATUSBARMODEL_H
 
 #include <QtCore/QAbstractListModel>
+#include <QtQml/QQmlContext>
 
 class StatusBarModel : public QAbstractListModel
 {
